@@ -11,21 +11,26 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f9;
-            font-family: Arial, sans-serif;
-            font-size: 5rem;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            font-family: 'Poppins', sans-serif;
             color: #333;
             text-align: center;
             overflow: hidden;
         }
         #display {
-            transition: color 0.3s ease;
+            font-size: 4rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            transition: color 0.3s ease, opacity 0.3s ease;
         }
         .animation {
             position: absolute;
             font-size: 3rem;
-            color: rgba(255, 87, 51, 0.7);
-            animation: float 5s infinite ease-in-out;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out forwards, spin 3s infinite linear;
         }
         @keyframes float {
             0% {
@@ -33,11 +38,20 @@
                 opacity: 1;
             }
             50% {
-                opacity: 0.5;
+                transform: translateY(-20px);
+                opacity: 0.7;
             }
             100% {
-                transform: translateY(-100vh);
+                transform: translateY(-40px);
                 opacity: 0;
+            }
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
             }
         }
     </style>
@@ -52,19 +66,23 @@
             animationContainer.textContent = '37';
             animationContainer.style.left = `${Math.random() * 100}vw`;
             animationContainer.style.top = `${Math.random() * 100}vh`;
+            animationContainer.style.transform = `scale(${Math.random() * 1.5 + 0.5})`;
             document.body.appendChild(animationContainer);
 
             setTimeout(() => {
                 animationContainer.remove();
-            }, 5000);
+            }, 3000);
         }
 
         function startAnimation() {
-            const animationInterval = setInterval(createAnimation, 200);
+            const display = document.getElementById('display');
+            display.textContent = ""; // Efface le message "Patientez"
+
+            const animationInterval = setInterval(createAnimation, 150);
             setTimeout(() => {
                 clearInterval(animationInterval);
-                document.getElementById('display').textContent = 'Patientez, revenez un peu après';
-                document.getElementById('display').style.color = '#333';
+                display.textContent = "Patientez, revenez un peu après"; // Réaffiche le message après 37 secondes
+                display.style.color = '#ffffff';
             }, 37000); // Stop animation after 37 seconds
         }
 
@@ -75,12 +93,7 @@
             const display = document.getElementById('display');
 
             if (minutes === 37 && seconds === 37) {
-                display.textContent = "";
-                display.style.color = "#ff5733";
                 startAnimation();
-            } else {
-                display.textContent = "Patientez, revenez un peu après";
-                display.style.color = "#333";
             }
         }
 
