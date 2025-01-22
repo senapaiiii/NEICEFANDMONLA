@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiffre 37</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+            font-size: 5rem;
+            color: #333;
+            text-align: center;
+            overflow: hidden;
+        }
+        #display {
+            transition: color 0.3s ease;
+        }
+        .animation {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 87, 51, 0.7);
+            animation: float 5s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="display">Patientez, revenez un peu après</div>
+
+    <script>
+        function createAnimation() {
+            const animationContainer = document.createElement('div');
+            animationContainer.className = 'animation';
+            animationContainer.textContent = '37';
+            animationContainer.style.left = `${Math.random() * 100}vw`;
+            animationContainer.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(animationContainer);
+
+            setTimeout(() => {
+                animationContainer.remove();
+            }, 5000);
+        }
+
+        function startAnimation() {
+            const animationInterval = setInterval(createAnimation, 200);
+            setTimeout(() => {
+                clearInterval(animationInterval);
+                document.getElementById('display').textContent = 'Patientez, revenez un peu après';
+                document.getElementById('display').style.color = '#333';
+            }, 37000); // Stop animation after 37 seconds
+        }
+
+        function checkTime() {
+            const now = new Date();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const display = document.getElementById('display');
+
+            if (minutes === 37 && seconds === 37) {
+                display.textContent = "";
+                display.style.color = "#ff5733";
+                startAnimation();
+            } else {
+                display.textContent = "Patientez, revenez un peu après";
+                display.style.color = "#333";
+            }
+        }
+
+        // Vérifier l'heure toutes les secondes
+        setInterval(checkTime, 1000);
+    </script>
+</body>
+</html>
